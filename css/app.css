@@ -1,0 +1,52 @@
+.none {
+  display: none !important;
+}
+
+body {
+  background: rgba(155, 211, 247, .7);
+  font-family: 'Roboto', sans-serif;
+}
+
+p {
+  margin: 0 0 5px;
+}
+
+.app {
+  margin: 20px auto;
+  width: 600px;
+}
+
+.article {
+  background: #FFF;
+  border: 1px solid rgba(0, 89, 181, 0.82);
+  border-radius: 5px;
+  width: 600px;
+  margin: 0 0 5px;
+  box-shadow: 2px 2px 5px -1px rgb(0, 81, 202);
+  padding: 3px 5px;
+}
+
+.news__author {
+  text-decoration: underline;
+  color: #007DDC;
+}
+
+.news__count {
+  margin: 10px 0 0 0;
+  display: block;
+}
+
+.test-input {
+  margin: 0 5px 5px 0;
+  padding: 3px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.test-button {
+  padding: 3px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
+}
