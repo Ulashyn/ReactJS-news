@@ -36,29 +36,38 @@ p {
   display: block;
 }
 
-.test-input {
+.add {
   margin: 0 5px 5px 0;
-  padding: 3px 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  outline: none;
-  transition: .5s ease;
-  border-color: rgb(238, 238, 238);
+  width: 210px;
+  border: 1px dashed rgba(0, 89, 181, 0.82);
+  padding: 5px;
 }
 
-.test-input:focus {
-  border-color: rgb(0, 81, 202);
+.add__author, .add__text, .add__btn, .add__checkrule {
+  display: block;
+  margin: 0 0 5px 0;
+  padding: 5px;
+  width: 94%;
+  border: 1px solid rgba(0, 89, 181, 0.82);
 }
 
-.test-button {
-  background-color: rgb(221, 221, 221);
-  padding: 3px 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  outline: none;
-  transition: .3s ease-in;
+.add__checkrule {
+  border: none;
+  font-size: 12px;
 }
 
-.test-button:hover {
-  background-color: rgb(241,241,237);
+.add__btn {
+  box-sizing: content-box;
+  color: #FFF;
+  text-transform: uppercase;
+  background: #007DDC;
+}
+
+.add__btn:hover {
+  background-color: #4CA4E6;
+}
+
+.add__btn:disabled {
+  background: #CCC;
+  color: #999;
 }

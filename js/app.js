@@ -74,33 +74,77 @@ class Article extends React.Component {
     }
 }
 
-class TestInput extends React.Component {
+class Add extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            agreeNotChecked: true,
+            authorIsEmpty: true,
+            textIsEmpty: true
+        };
         this.onBtnClickHandler = this.onBtnClickHandler.bind(this);
+        this.onCheckRuleClick = this.onCheckRuleClick.bind(this);
+        this.onFieldChange = this.onFieldChange.bind(this);
     }
 
     componentDidMount() {
-        ReactDOM.findDOMNode(this.refs.myTestInput).focus();
+        ReactDOM.findDOMNode(this.refs.author).focus();
     }
 
-    onBtnClickHandler() {
-        console.log(this.refs);
-        alert(ReactDOM.findDOMNode(this.refs.myTestInput).value);
+    onBtnClickHandler(e) {
+        e.preventDefault();
+        var author = ReactDOM.findDOMNode(this.refs.author).value;
+        var text = ReactDOM.findDOMNode(this.refs.text).value;
+        alert(author + '\n' + text);
+    }
+
+    onCheckRuleClick(e) {
+       this.setState({agreeNotChecked: !this.state.agreeNotChecked});
+    }
+
+    onFieldChange(fieldName, e) {
+        if (e.target.value.trim().length > 0) {
+            this.setState({['' + fieldName]: false})
+        } else {
+            this.setState({['' + fieldName]: true})
+        }
     }
 
     render() {
+        var agreeNotChecked = this.state.agreeNotChecked,
+            authorIsEmpty = this.state.authorIsEmpty,
+            textIsEmpty = this.state.textIsEmpty;
+
         return(
-            <div>
-                <input 
+            <form className="add cf">
+                <input
                     type="text"
-                    className="test-input" 
-                    defaultValue="" 
-                    placeholder="Введіть значення"
-                    ref="myTestInput"
+                    className="add__author"
+                    onChange={this.onFieldChange.bind(this, 'authorIsEmpty')}
+                    placeholder="Ваше ім'я"
+                    ref="author"
                 />
-                <button className="test-button" onClick={this.onBtnClickHandler} ref="alert_button">Показати alert</button>
-            </div>
+                <textarea
+                    className="add__text"
+                    onChange={this.onFieldChange.bind(this, 'textIsEmpty')}
+                    placeholder="Текс новини"
+                    ref="text"
+                ></textarea>
+                <label className="add__checkrule">
+                    <input
+                        type="checkbox"
+                        rel="checkrule"
+                        onChange={this.onCheckRuleClick}
+                    />Я погоджуюсь з правилами
+                </label>
+                <button
+                    className="add__btn"
+                    onClick={this.onBtnClickHandler}
+                    ref="alert_button"
+                    disabled={agreeNotChecked || authorIsEmpty || textIsEmpty}
+                    >Показати alert
+                </button>
+            </form>
         );
     }
 }
@@ -110,7 +154,7 @@ class App extends React.Component {
         return (
             <div className="app">
                 <h3>Новини</h3>
-                <TestInput />
+                <Add />
                 <News data={my_news} /> {/*додали властивість data*/}
             </div>
         );
