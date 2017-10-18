@@ -1,3 +1,5 @@
+'use strict';
+
 var my_news = [
   {
     author: 'Саша Спілберг',
@@ -15,6 +17,8 @@ var my_news = [
     bigText: 'Насправді платний, просто потрібно прочитати дуже довгу ліцензійну згоду.'
   }
 ];
+
+window.ee = new EventEmitter();
 
 class News extends React.Component {
     render() {
@@ -93,9 +97,19 @@ class Add extends React.Component {
 
     onBtnClickHandler(e) {
         e.preventDefault();
+        var textEl = ReactDOM.findDOMNode(this.refs.text);
         var author = ReactDOM.findDOMNode(this.refs.author).value;
-        var text = ReactDOM.findDOMNode(this.refs.text).value;
-        alert(author + '\n' + text);
+        var text = textEl.value;
+        var item = [{
+            author: author,
+            text: text,
+            bigText: '...'
+        }];
+
+        window.ee.emit('News.add', item);
+
+        textEl.value = '';
+        this.setState({textIsEmpty: true});
     }
 
     onCheckRuleClick(e) {
@@ -142,7 +156,7 @@ class Add extends React.Component {
                     onClick={this.onBtnClickHandler}
                     ref="alert_button"
                     disabled={agreeNotChecked || authorIsEmpty || textIsEmpty}
-                    >Показати alert
+                    >Додати новину
                 </button>
             </form>
         );
@@ -150,12 +164,32 @@ class Add extends React.Component {
 }
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {news: my_news};
+    }
+
+    componentDidMount() {
+        var self = this;
+        window.ee.addListener('News.add', function(item) {
+            var nextNews = item.concat(self.state.news);
+            self.setState({news: nextNews});
+        });
+    }
+
+    componentWillUnmount() {
+        window.ee.removeListener('News.add');
+    }
+
     render() {
+        var news = this.state.news;
+
+        console.log('render');
         return (
             <div className="app">
                 <h3>Новини</h3>
                 <Add />
-                <News data={my_news} /> {/*додали властивість data*/}
+                <News data={news} /> {/*Add property data*/}
             </div>
         );
     }
